@@ -23,11 +23,13 @@ RUN apt update \
 RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/sury-php.list 
 RUN wget -qO - https://packages.sury.org/php/apt.gpg | apt-key add -
 RUN apt update 
-RUN apt-get install -y php8.0-fpm php8.0-common php8.0-gmp php8.0-curl php8.0-intl php8.0-mbstring php8.0-xmlrpc php8.0-mysql php8.0-gd php8.0-imap php8.0-ldap php-cas php8.0-bcmath php8.0-xml php8.0-cli php8.0-zip php8.0-sqlite3
+RUN apt-get install -y php-fpm php8.0-fpm php8.0-common php8.0-gmp php8.0-curl php8.0-intl php8.0-mbstring php8.0-xmlrpc php8.0-mysql php8.0-gd php8.0-imap php8.0-ldap php-cas php8.0-bcmath php8.0-xml php8.0-cli php8.0-zip php8.0-sqlite3
 RUN ln -s /etc/nginx/sites-available/glpi /etc/nginx/sites-enabled/ 
 COPY php.ini /etc/php/8.0/fpm/php.ini
 ADD /config_db.php code/glpi/config/config_db.php
 ADD www.conf /etc/php/8.0/fpm/pool.d
+RUN systemctl enable php8.0-fpm 
 RUN /etc/init.d/nginx restart
 RUN /etc/init.d/php8.0-fpm restart
+CMD ["nginx", "-g", "daemon off;"]
 
