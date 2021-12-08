@@ -28,6 +28,6 @@ RUN ln -s /etc/nginx/sites-available/glpi /etc/nginx/sites-enabled/
 COPY php.ini /etc/php/8.0/fpm/php.ini
 ADD /config_db.php code/glpi/config/config_db.php
 ADD www.conf /etc/php/8.0/fpm/pool.d
-
-CMD ["nginx", "-g", "daemon off;"]
+RUN /etc/init.d/nginx restart
+RUN /etc/init.d/php8.0-fpm restart
 
