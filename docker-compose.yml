@@ -1,0 +1,9 @@
+version: '2'
+services:
+  glpi:
+    build: ./
+    container_name: glpi
+    env_file:
+      - ./glpi.env
+    ports:
+      - "18007:8080"
