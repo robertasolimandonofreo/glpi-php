@@ -7,3 +7,5 @@ services:
       - ./glpi.env
     ports:
       - "18007:8080"
+    privileged: true
+    restart: always

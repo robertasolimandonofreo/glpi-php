@@ -1,0 +1,24 @@
+version: '2'
+services:
+  glpi:
+    build: glpi
+    env_file:
+      - ./glpi.env
+    ports:
+      - "18007:8080"
+    volumes:
+      - glpi_code:/code
+      - ./site.conf:/etc/nginx/conf.d/site.conf
+      - ./config_db.php:/code/glpi/config/config_db.php
+    links:
+      - php
+
+  php:
+    image: robertasolimandonofreo/debian:latest
+    volumes:
+      - glpi_code:/code
+      - ./config_db.php:/code/glpi/config/config_db.php
+
+volumes:
+  glpi_code: {}
+  glpi_data: {}
